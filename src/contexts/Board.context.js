@@ -20,15 +20,19 @@ const BoardContextProvider = (props) => {
 
     const GetBoardArray = (size) => {
         let image;
-        let id;
+        let number;
         let array = [];
         setBoardArray([]);
         for (let i = 0; i < size / 2; i++) {
-            id = RandomNumber(0, 200);
-            image = `https://picsum.photos/id/${id}/300/`;
-            array.push({id: id, img: image});
+            number = RandomNumber(0, 200);
+            image = `https://picsum.photos/id/${number}/300/`;
+            array.push({number: number, img: image});
         }
-        setBoardArray(ShuffleBoard(array.concat(array)));
+       array = ShuffleBoard(array.concat(array));
+       setBoardArray(array.map((card, i) => {
+            return {...card, id: i};
+       }))
+       
     }
     
     const RandomNumber = (min, max) => {
@@ -47,6 +51,7 @@ const BoardContextProvider = (props) => {
     
     useEffect(() => {
         GetBoardArray(boardSize);
+        console.log(boardArray);
     }, [boardSize]);
 
     return (
