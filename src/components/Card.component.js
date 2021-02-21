@@ -47,11 +47,10 @@ const Card = React.memo(({img, id, item}) => {
     const { addCard, cardsArray } = useContext(GameContext);
 
     const handleClick = (card) => {
-        if(cardsArray.length < 2) {
+        if(cardsArray.length < 2 && cardsArray[0]?.id != card.id) {
             addCard(card);
         }
     }
-
 
     return (
         <CardWrapper
@@ -66,6 +65,3 @@ const Card = React.memo(({img, id, item}) => {
 
 
 export default Card;
-
-
-//Can click on one element 2 times --- block clicking on the same card
