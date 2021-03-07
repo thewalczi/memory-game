@@ -10,12 +10,12 @@ function App() {
     <Router>
       <Switch>
     <div className="App">
-      <GameContextProvider>
         <BoardContextProvider>
-            <Route path="/" exact component={WelcomePage} />
-            <Route path="/game" exact component={GamePage} />
+          <GameContextProvider>
+            {/* <Route path="/" exact component={WelcomePage} /> */}
+            <Route path="/" exact component={GamePage} />
+          </GameContextProvider>
         </BoardContextProvider>
-      </GameContextProvider>
     </div>
         </Switch>
     </Router>

@@ -12,13 +12,12 @@ const BoardContainer = styled.div`
 
 const CardGrid = styled.div`
     display: grid;
-    grid-gap: 10px;
+    grid-gap: 20px;
     width: 100%;
     margin: 0 auto;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(${props => Math.floor(Math.sqrt(props.boardArray.length))}, 1fr);
     grid-template-rows: auto;
     height: 100%;
-    padding: 0 10px;
 `;
 
 const BoardComponent = () => {

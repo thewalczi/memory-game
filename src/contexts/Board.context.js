@@ -7,16 +7,16 @@ const BoardContextProvider = (props) => {
     const [boardConfig, setBoardConfig] = useState(
         {
             size: {
-                small: 24,
-                medium: 36,
-                large: 48
+                small: 16,
+                medium: 25,
+                large: 36
             }
         }
     )
 
     const [boardArray, setBoardArray] = useState([]);
 
-    const [boardSize, setBoardSize] = useState(24);
+    const [boardSize, setBoardSize] = useState(16);
 
     const GetBoardArray = (size) => {
         let image;

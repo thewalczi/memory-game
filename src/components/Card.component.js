@@ -1,6 +1,28 @@
 import React, { useContext } from 'react';
-import styled from "styled-components";
+import styled from "styled-components/macro";
 import { GameContext } from '../contexts/Game.context';
+
+const Card = React.memo(({img, id, item}) => {
+
+    const { addCard, cardsArray, setGameStart } = useContext(GameContext);
+
+    const handleClick = (card) => {
+        if(cardsArray.length < 2 && cardsArray[0]?.id != card.id) {
+            setGameStart(true);
+            addCard(card);
+        }
+    }
+
+    return (
+        <CardWrapper
+            img={img}   
+            id={id}
+            onClick={() => handleClick(item)}
+            data-status="false"
+        >
+        </CardWrapper>
+    )
+});
 
 const CardWrapper = styled.div`
     width: auto;
@@ -9,13 +31,13 @@ const CardWrapper = styled.div`
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    border: 1px solid #fff;
     border-radius: 5px;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 0px 5px #222e44;
 
     &:before {
-        background: #777777;
+        background: #222e44;
         content: '';
         width: 100%;
         height: 100%;
@@ -41,27 +63,6 @@ const CardWrapper = styled.div`
     }
 
 `;
-
-const Card = React.memo(({img, id, item}) => {
-
-    const { addCard, cardsArray } = useContext(GameContext);
-
-    const handleClick = (card) => {
-        if(cardsArray.length < 2 && cardsArray[0]?.id != card.id) {
-            addCard(card);
-        }
-    }
-
-    return (
-        <CardWrapper
-            img={img}   
-            id={id}
-            onClick={() => handleClick(item)}
-            data-status="false"
-        >
-        </CardWrapper>
-    )
-});
 
 
 export default Card;

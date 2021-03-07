@@ -14,6 +14,7 @@ const Panel = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    align-items: center;
     position: absolute;
     top: 50%;
     left: 50%;
