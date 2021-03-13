@@ -4,14 +4,17 @@ export const BoardContext = React.createContext();
 
 const BoardContextProvider = (props) => {
 
-    const [boardConfig, setBoardConfig] = useState(
-        {
-            size: {
-                small: 16,
-                medium: 25,
-                large: 36
+    const [boardConfig] = useState(
+        [
+            {
+                label: 'small',
+                size: 16
+            },
+            {
+                label: 'large',
+                size: 36
             }
-        }
+        ]
     )
 
     const [boardArray, setBoardArray] = useState([]);

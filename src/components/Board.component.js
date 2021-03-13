@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import React, { useContext, useState } from "react";
+import styled from "styled-components/macro";
+import React, { useContext } from "react";
 import Card from "./Card.component";
 import { BoardContext } from "../contexts/Board.context";
 

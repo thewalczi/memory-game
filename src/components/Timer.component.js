@@ -4,7 +4,7 @@ import { GameContext } from '../contexts/Game.context';
 
 const Timer = (props) => {
 
-    const { cardsArray, gameStart } = useContext(GameContext);
+    const { gameStart } = useContext(GameContext);
     const [seconds, setSeconds] = useState(0);
     const [minutes, setMinutes] = useState(0);
 

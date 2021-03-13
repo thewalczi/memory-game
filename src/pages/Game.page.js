@@ -1,13 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from "styled-components/macro";
 import BoardComponent from '../components/Board.component';
-import StatsPanelComponent from '../components/StatsPanel.component';
+import StatsBar from '../components/StatsBar.component';
+import {wrapper} from '../styles/mixins.styles';
 
 const GameContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-    display: flex;
+    ${wrapper};
     flex-direction: column;
     justify-content: center;
 `;
@@ -16,7 +14,7 @@ function GamePage(props) {
     return (
         <GameContainer>
             <BoardComponent/>
-            <StatsPanelComponent/>
+            <StatsBar/>
         </GameContainer>
     );
 }
