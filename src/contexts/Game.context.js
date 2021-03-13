@@ -1,71 +1,76 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
+import { BoardContext } from './Board.context';
 
 export const GameContext = React.createContext();
 
 const GameContextProvider = (props) => {
 
-    const [activeCards, setActiveCards] = useState([]);
+    const { boardSize } = useContext(BoardContext);
 
-    const [isShadow, setIsShadow] = useState(false);
+    const [gameStart, setGameStart] = useState(false);
+    const [cardsArray, setCardsArray] = useState([]);
+    const [movesCounter, setMovesCounter] = useState(0);
+    const [player1Score, setPlayer1Score] = useState(0);
 
-    const [currentPlayer, setCurrentPlayer] = useState(true);
+    const addCard = (card) => {
+        setCardsArray(prevState => [...prevState, card]);
+    };
 
-    const cardSelect = (cardId) => {
-        if(activeCards.length < 2) {
-            setActiveCards(prevState => [...prevState, cardId]);
-        }
-        else {
-            setActiveCards([]);
-        }
+    const statusChange = (status) => {
+        cardsArray.map(card => {
+            let selected = document.getElementById(`${card.id}`);
+            return selected.setAttribute('data-status', status);
+        })
     }
 
-    const RemoveSelected = () => {
-        const cards = document.querySelectorAll('.card');
-        for (let i = 0; i < cards.length; i++) {
-            cards[i].classList.remove('selected');
+    const setSelected = () => {
+        statusChange('selected');
+    }
+
+    const setHidden = () => {
+        statusChange('hidden');
+    }
+
+    const setCollected = () => {
+        statusChange('collected');
+    }
+
+    useEffect(() => {
+        if(cardsArray.length <= 2){
+            setSelected();
         }
-        setActiveCards([]);
-    }
-
-    const addCollected = () => {
-        const selected = document.querySelectorAll('.selected');
-        for (let i = 0; i < selected.length; i++) {
-            selected[i].classList.add('collected');
+        if(cardsArray.length === 2){
+            setTimeout(() => {
+                if(cardsArray[0].number === cardsArray[1].number){
+                    setCollected();
+                    setPlayer1Score(player1Score + 1);
+                }
+                else {
+                    setHidden();
+                }
+                setCardsArray([]);
+            }, 1000)
+            setMovesCounter(movesCounter + 1);
         }
-    }
+    }, [cardsArray]);
 
-    const setPlayer = () => {
-        setCurrentPlayer(prevState => !prevState);
-    }
-
-    const cardCheck = () => {
-        if(activeCards.length == 2) {
-            if(activeCards[0] === activeCards[1]) {
-                addCollected();
-                RemoveSelected();
-                alert('GOOD');
-            }
-            else {
-                // RemoveSelected();
-                setIsShadow(true);
-                alert('BAD');
-                // setPlayer();
-            }
+    useEffect(() => {
+        console.log(boardSize);
+        if(player1Score === boardSize / 2) {
+            setGameStart(false);
+            console.log('end game');
         }
-    }
-
-    useEffect(()=> {
-        cardCheck();
-    }, [activeCards])
+        console.log(player1Score);
+    }, [player1Score])
 
     return (
         <GameContext.Provider value={{
-            cardSelect,
-            activeCards,
-            setActiveCards,
-            isShadow,
-            setIsShadow,
-            RemoveSelected
+            addCard,
+            cardsArray,
+            movesCounter,
+            player1Score,
+            gameStart,
+            setGameStart
         }}>
             {props.children}
         </GameContext.Provider>

@@ -1,23 +1,16 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { BoardContext } from '../contexts/Board.context';
 import ButtonComponent from './Button.component';
 
 const Panel = styled.div`
-    width: 90%;
-    max-width: 500px;
-    height: 90%;
-    max-height: 400px; 
-    border: 1px solid #fff;
+    width: 100%;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    justify-content: center;
+    align-items: center;
 `;
 
 const Title = styled.h1`
@@ -28,24 +21,26 @@ const Title = styled.h1`
     text-align: center;
 `;
 
-function StartPanelComponent({gameName}) {
+const StartPanelComponent = ({gameName}) => {
 
     const {boardConfig} = useContext(BoardContext);
-    
+
     return (
         <Panel>
             <Title>{gameName}</Title>
-            <Link to="/game">
-                <ButtonComponent label={'small board'} size={boardConfig.size.small}/>
-            </Link>
-            <Link to="/game">
-                <ButtonComponent label={'medium board'} size={boardConfig.size.medium} />
-            </Link>
-            <Link to="/game">
-                <ButtonComponent label={'large board'} size={boardConfig.size.large} />
-            </Link>
+            {boardConfig.map((item, i) => {
+                return <ChooseSizeButton key={i} label={item.label} size={item.size}/>
+            })}
         </Panel>
     );
+}
+
+const ChooseSizeButton = ({label, size}) => {
+    return (
+        <Link to="/game">
+            <ButtonComponent label={label} size={size}/>
+        </Link>
+    )
 }
 
 export default StartPanelComponent;

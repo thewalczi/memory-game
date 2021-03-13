@@ -1,71 +1,69 @@
-import React, { useState, useContext, useEffect } from 'react';
-import styled from "styled-components";
+import React, { useContext } from 'react';
+import styled from "styled-components/macro";
 import { GameContext } from '../contexts/Game.context';
+import { color } from '../styles/global-variables.styles';
+import { tile } from '../styles/mixins.styles';
 
 const CardWrapper = styled.div`
+    ${tile};
     width: auto;
     height: auto;
     background-image: url(${props =>(props.img)});
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    border: 1px solid #fff;
-    border-radius: 5px;
     position: relative;
     overflow: hidden;
+
     &:before {
+        background: ${color.darknavy};
         content: '';
-        background: gray;
         width: 100%;
         height: 100%;
         position: absolute;
         top: 0;
         left: 0;
+        border-radius: 0;
     }
-    
-    &.selected {
+
+    &[data-status='hidden']{
+        &:before {
+            display: block;
+        }
+    }
+
+    &[data-status='selected']{
         &:before {
             display: none;
         }
     }
-    
-    &.collected {
-        background: rgba(255, 255, 255, 0);
-        &:before {
-            display: none;
-        }
+
+    &[data-status='collected']{
+        visibility: hidden;
     }
+
 `;
 
-const Card = ({img, id}) => {
+const Card = React.memo(({img, id, item}) => {
 
-    const { cardSelect, activeCards, setActiveCards } = useContext(GameContext);
+    const { addCard, cardsArray, setGameStart } = useContext(GameContext);
 
-    const [ isSelected, setIsSelected] = useState(false);
-
-    const handleClick = (id) => {
-        if(activeCards.length < 2 && !isSelected){
-            cardSelect(id);
-            setIsSelected(true);
+    const handleClick = (card) => {
+        if(cardsArray.length < 2 && cardsArray[0]?.id !== card.id) {
+            setGameStart(true);
+            addCard(card);
         }
-        else {
-            setActiveCards([]);
-        }
-        console.log(activeCards);
     }
 
-    useEffect(() => {
-        if(activeCards.length == 2){
-            setIsSelected(false);
-        };
-    }, [activeCards]);
-    
-
     return (
-        <CardWrapper className={`card ${isSelected ? 'selected' : ''}`} img={img} data-id={id} onClick={() => handleClick(id)}>
+        <CardWrapper
+            img={img}   
+            id={id}
+            onClick={() => handleClick(item)}
+            data-status="false"
+        >
         </CardWrapper>
     )
-};
-
+});
 
 export default Card;
