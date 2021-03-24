@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import styled from "styled-components/macro";
 import { GameContext } from '../contexts/Game.context';
 import { BoardContext } from '../contexts/Board.context';
-import { color } from '../styles/global-variables.styles';
+import { color, breakpoint } from '../styles/global-variables.styles';
 import { tile } from '../styles/mixins.styles';
 import {
     Airplane,
@@ -67,8 +67,15 @@ const CardWrapper = styled.div`
     }
 
     .card-icon {
-        transform: scale(3);
+        transform: scale(${props => props.boardSize === 'large' ? 2 : 3});
         align-self: center;
+
+        @media (max-width: ${breakpoint.md}){
+            transform: scale(${props => props.boardSize === 'large' ? 1.5 : 2})
+        }
+        @media (max-width: ${breakpoint.sm}){
+            transform: scale(${props => props.boardSize === 'large' ? 1 : 1.5})
+        }
     }
 
 `;
@@ -76,9 +83,9 @@ const CardWrapper = styled.div`
 const Card = React.memo(({icon, id, item}) => {
 
     const { addCard, cardsArray, setGameStart } = useContext(GameContext);
-    const { icons } = useContext(BoardContext);
+    const { boardSize } = useContext(BoardContext);
 
-    const [iconComponents, setIconComponents] = useState({
+    const [iconComponents] = useState({
         airplane: Airplane,
         alarm: Alarm, 
         anchor: Anchor, 
@@ -113,6 +120,7 @@ const Card = React.memo(({icon, id, item}) => {
             id={id}
             onClick={() => handleClick(item)}
             data-status="false"
+            boardSize={boardSize.label}
         >
             <IconComponent className="card-icon"/>
         </CardWrapper>

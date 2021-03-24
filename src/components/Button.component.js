@@ -22,7 +22,7 @@ const Button = styled.button`
     }
 `;
 
-const ButtonComponent = ({label, size}) => {
+const ButtonComponent = ({boardSize}) => {
 
     const { setBoardSize } = useContext(BoardContext);
 
@@ -31,7 +31,7 @@ const ButtonComponent = ({label, size}) => {
     }
 
     return (
-        <Button onClick={() => handleClick(size)}>{label}</Button>
+        <Button onClick={() => handleClick(boardSize)}>{boardSize.label}</Button>
     );
 }
 

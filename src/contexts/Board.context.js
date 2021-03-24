@@ -17,7 +17,7 @@ const BoardContextProvider = (props) => {
         ]
     )
 
-    const [icons, setIcons] = useState([
+    const [icons] = useState([
         'airplane',
         'alarm', 
         'anchor', 
@@ -40,7 +40,7 @@ const BoardContextProvider = (props) => {
 
     const [boardArray, setBoardArray] = useState([]);
 
-    const [boardSize, setBoardSize] = useState(16);
+    const [boardSize, setBoardSize] = useState();
 
     const GetBoardArray = (size) => {
         let icon;
@@ -74,8 +74,9 @@ const BoardContextProvider = (props) => {
     }
     
     useEffect(() => {
-        GetBoardArray(boardSize);
-        console.log(boardArray);
+        if(boardSize){
+            GetBoardArray(boardSize.size);
+        }
     }, [boardSize]);
 
     return (

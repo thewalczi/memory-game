@@ -5,8 +5,7 @@ export const wrapper = css`
     display: flex;
     max-width: 800px;
     width: 100%;
-    max-height: 900px;
-    height: 100%;
+    position: relative;
     padding: 20px;
     margin: 0 auto;
 `
