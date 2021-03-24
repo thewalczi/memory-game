@@ -29,16 +29,16 @@ const StartPanelComponent = ({gameName}) => {
         <Panel>
             <Title>{gameName}</Title>
             {boardConfig.map((item, i) => {
-                return <ChooseSizeButton key={i} label={item.label} size={item.size}/>
+                return <ChooseSizeButton key={i} boardSize={item}/>
             })}
         </Panel>
     );
 }
 
-const ChooseSizeButton = ({label, size}) => {
+const ChooseSizeButton = ({boardSize}) => {
     return (
         <Link to="/game">
-            <ButtonComponent label={label} size={size}/>
+            <ButtonComponent boardSize={boardSize}/>
         </Link>
     )
 }

@@ -55,12 +55,10 @@ const GameContextProvider = (props) => {
     }, [cardsArray]);
 
     useEffect(() => {
-        console.log(boardSize);
-        if(player1Score === boardSize / 2) {
+        if(boardSize && player1Score === boardSize.size / 2) {
             setGameStart(false);
             console.log('end game');
         }
-        console.log(player1Score);
     }, [player1Score])
 
     return (

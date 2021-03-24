@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components/macro';
 import { GameContext } from '../contexts/Game.context';
 import Timer from './Timer.component';
-import { color } from './../styles/global-variables.styles';
+import { color, breakpoint } from './../styles/global-variables.styles';
 import { tile } from '../styles/mixins.styles';
 
 const Bar = styled.div`
@@ -29,6 +29,10 @@ const StatsLabel = styled.h6`
     font-weight: bold;
     text-align: center;
     margin: 0;
+
+    @media (max-width: ${breakpoint.md}){
+        font-size: 12px;
+    }
 `;
 
 const StatsValue = styled.h2`
@@ -37,11 +41,16 @@ const StatsValue = styled.h2`
     font-weight: normal;
     text-align: center;
     margin: 0;
+  
+    @media (max-width: ${breakpoint.md}){
+        font-size: 24px;
+    }
 `;
 
-const StatsBar = (props) => {
+const StatsBar = () => {
 
     const { movesCounter, player1Score } = useContext(GameContext);
+    
     return (
         <Bar>
             <StatsCell>

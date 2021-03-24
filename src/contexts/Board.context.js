@@ -17,19 +17,40 @@ const BoardContextProvider = (props) => {
         ]
     )
 
+    const [icons] = useState([
+        'airplane',
+        'alarm', 
+        'anchor', 
+        'attachment', 
+        'bell', 
+        'bolt', 
+        'bulb', 
+        'cloud', 
+        'colorBucket', 
+        'eye', 
+        'flag', 
+        'heart', 
+        'lockUnlock', 
+        'mic', 
+        'music', 
+        'pacman', 
+        'shapeHexagon',
+        'shoppingCart'
+    ])
+
     const [boardArray, setBoardArray] = useState([]);
 
-    const [boardSize, setBoardSize] = useState(16);
+    const [boardSize, setBoardSize] = useState();
 
     const GetBoardArray = (size) => {
-        let image;
+        let icon;
         let number;
         let array = [];
         setBoardArray([]);
         for (let i = 0; i < size / 2; i++) {
             number = RandomNumber(0, 200);
-            image = `https://picsum.photos/id/${number}/300/`;
-            array.push({number: number, img: image});
+            icon = icons[i];
+            array.push({number: number, icon: icon});
         }
        array = ShuffleBoard(array.concat(array));
        setBoardArray(array.map((card, i) => {
@@ -53,8 +74,9 @@ const BoardContextProvider = (props) => {
     }
     
     useEffect(() => {
-        GetBoardArray(boardSize);
-        console.log(boardArray);
+        if(boardSize){
+            GetBoardArray(boardSize.size);
+        }
     }, [boardSize]);
 
     return (
@@ -62,7 +84,8 @@ const BoardContextProvider = (props) => {
             boardArray,
             boardSize,
             setBoardSize,
-            boardConfig
+            boardConfig,
+            icons
         }}>
             {props.children}
         </BoardContext.Provider>

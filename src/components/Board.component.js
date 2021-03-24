@@ -4,13 +4,20 @@ import Card from "./Card.component";
 import { BoardContext } from "../contexts/Board.context";
 
 const BoardContainer = styled.div`
-    height: 100%;
     width: 100%;
-    flex: 1 1 60%;
+    flex: 1 1 100%;
     position: relative;
+
+    &:after {
+        content: '';
+        display: block;
+        padding-bottom: 100%;
+    }
 `;
 
 const CardGrid = styled.div`
+    position: absolute;
+    height: 100%;
     display: grid;
     grid-gap: 20px;
     width: 100%;
@@ -29,7 +36,7 @@ const BoardComponent = () => {
             <CardGrid boardArray={boardArray}>
                 {boardArray.map((item, i) => {
                     return (
-                        <Card key={i} img={item.img} id={item.id} item={item}/>
+                        <Card key={i} icon={item.icon} id={item.id} item={item}/>
                     );
                 })}
             </CardGrid>

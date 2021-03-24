@@ -16,6 +16,7 @@ export const GlobalStyle = createGlobalStyle`
       );
       background-repeat: no-repeat;
       background-size: cover;
+      background-attachment: fixed;
       color: #fff;
       font-family: sans-serif;
     }
